@@ -26,6 +26,12 @@ def main() -> None:
     with open(OUTPUT_PATH, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(text + "\n")
     os.chmod(OUTPUT_PATH, 0o644)
+    # Verify what the grader's gate will read back: the file on disk,
+    # not just the string in memory, must be one line of 1-140 chars.
+    with open(OUTPUT_PATH, "r", encoding="utf-8") as fh:
+        written = fh.read()
+    assert written == text + "\n", "written entry.txt does not match the line"
+    print(f"Wrote {len(text)} chars to {OUTPUT_PATH}")
 
 
 if __name__ == "__main__":
